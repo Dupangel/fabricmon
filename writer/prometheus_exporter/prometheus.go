@@ -57,6 +57,9 @@ func (w *PrometheusWriter) makeBatch(fabric infiniband.Fabric) error {
 		"src_port": strconv.Itoa(fabric.SourcePort),
 	}
 
+	// Completely reset counter vector to detect ports that went away
+	w.hca_port_vec.Reset()
+
 	for _, node := range fabric.Nodes {
 		if node.NodeType != infiniband.IB_NODE_SWITCH {
 			continue
