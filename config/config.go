@@ -23,6 +23,7 @@ type FabricmonConf struct {
 	Logging            LoggingConf
 	Topology           TopologyConf
 	PrometheusExporter PrometheusExporterConf `yaml:"prometheus_exporter"`
+	Hcas               string `yaml:"hcas"`
 }
 
 func (conf *FabricmonConf) validate() error {
