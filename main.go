@@ -15,6 +15,7 @@ import (
 	"os"
 	"os/signal"
 	"time"
+	"strings"
 
 	"golang.org/x/sys/unix"
 	"gopkg.in/alecthomas/kingpin.v2"
@@ -81,7 +82,7 @@ func main() {
 	}
 
 	slog.Info("FabricMon " + version.Info())
-	hcas := infiniband.GetCAs()
+	hcas := infiniband.GetCAs(strings.Split(conf.Hcas, ","))
 
 	if len(hcas) == 0 {
 		slog.Error("No HCAs found in system. Exiting.")

@@ -17,6 +17,8 @@ import (
 	"strconv"
 	"time"
 	"unsafe"
+
+	"github.com/juliangruber/go-intersect/v2"
 )
 
 type HCA struct {
@@ -120,11 +122,12 @@ func (h *HCA) Release() {
 	}
 }
 
-func GetCAs() []HCA {
+func GetCAs(targetCAs []string) []HCA {
 	caNames := umadGetCANames()
-	hcas := make([]HCA, len(caNames))
+	finalCAs := intersect.SimpleGeneric(targetCAs, caNames)
+	hcas := make([]HCA, len(finalCAs))
 
-	for i, caName := range caNames {
+	for i, caName := range finalCAs {
 		var ca C.umad_ca_t
 
 		ca_name := C.CString(caName)
